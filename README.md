@@ -1,5 +1,4 @@
-# React Native Recipe App
-## Time Traveling Capybaras
+# Time Traveling Capybaras - React Native Recipe App
 ### Authors
 Benjamin Danzig, Christopher Kucera, Samuel Ronning, Charles Rose, Elijah Scherz
 
