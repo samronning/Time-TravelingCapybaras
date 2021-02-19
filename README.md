@@ -2,6 +2,7 @@
 ### Authors
 Benjamin Danzig, Christopher Kucera, Samuel Ronning, Charles Rose, Elijah Scherz
 
+#### Project Goals
 Our meal planning app hopes to fill the role of a convenient meal planning tool
 for a variety of scenarios. Meal planning is gaining popularity as it is a way
 to shop more efficiently and make the best of all ingredients purchased.
