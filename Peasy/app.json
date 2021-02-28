@@ -1,0 +1,12 @@
+{
+  "name": "Peasy",
+  "displayName": "Peasy",
+  "expo": {
+    "name": "Peasy",
+    "slug": "Peasy",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
