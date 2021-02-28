@@ -17,3 +17,11 @@ working towards a concrete deliverable while evaluating our progress through
 quantitative measurements such as passing tests, new users, completed project
 tasks. However, we also plan on evaluating through source reviews from friends,
 family, as well as groups who work and live in food deserts to gain their perspective.
+
+#### Local Setup
+```
+cd Peasy
+expo start
+i
+```
+`i` opens in an iOS simulator - you can also enter `w` for a web simulator or `a` for Android, or scan the QR code to run on your phone. 
