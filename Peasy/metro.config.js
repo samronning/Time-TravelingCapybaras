@@ -10,6 +10,13 @@ module.exports = (async () => {
 
 	return {
 		transformer: {      
+			// fix for svg icons to work in web
+			getTransformOptions: async () => ({
+				transform: {
+					experimentalImportSupport: false,
+					inlineRequires: false
+				}
+			}),
 			babelTransformerPath: require.resolve("react-native-svg-transformer")    
 		},    
 		resolver: {
