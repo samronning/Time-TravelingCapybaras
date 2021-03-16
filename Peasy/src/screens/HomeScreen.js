@@ -4,6 +4,7 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeGraphic from '../assets/homeGraphic.svg';
+import styles from '../components/Styles/styles.tsx';
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -12,42 +13,16 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.logoContainer}>
         <HomeGraphic width={240} height={240}/>
       </View>
+      <Text style={styles.h2}>Because food should be fun.</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() =>
-          navigation.navigate('Profile', { name: 'your' })
+          navigation.navigate('Explore')
         }> 
-        <Text style={styles.buttonText}>Profile</Text>
+        <Text style={styles.buttonText}>Explore</Text>
       </TouchableOpacity>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  app: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: "auto",
-    padding: 70,
-    maxWidth: 500
-  },
-  header: {
-    fontSize: 50,
-    fontWeight: 'bold',
-  },
-  button: {
-    backgroundColor: '#808080',
-    alignItems: "center",
-    padding: 20,
-    borderRadius: 20
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 20
-  },
-  logoContainer: {
-    paddingVertical: 50
-  }
-});
 
 export default HomeScreen;
