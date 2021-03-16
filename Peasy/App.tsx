@@ -1,13 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import texts from './src/components/Texts/texts.tsx';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './src/screens/HomeScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text style={texts.title}>Peasy</Text>
-      <Text style={texts.h2}>Edit in app.tsx.</Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ title: 'Peasy' }}
+          />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+        </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
