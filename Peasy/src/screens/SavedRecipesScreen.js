@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import RecipesGraphic from '../assets/recipes.svg';
 import styles from '../components/Styles/styles.tsx';
 
-const SavedRecipesScreen = ({ navigation }) => {
+const SavedRecipesScreen = ({ navigation }) => {  
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmationModal, confirmationVisible] = useState(false);
   const [recipeName, onChange] = React.useState(null);
@@ -116,7 +116,7 @@ const SavedRecipesScreen = ({ navigation }) => {
                   setModalVisible(false)
                 }}
               >
-              <Text style={modalstyles.textStyle}>Confirm and exit</Text>
+              <Text style={modalstyles.textStyle}>Confirm and don't add</Text>
               </TouchableOpacity>
             </View>
           </View>

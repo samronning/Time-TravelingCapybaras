@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default StyleSheet.create({
   home: {
@@ -20,16 +21,36 @@ export default StyleSheet.create({
     fontSize: 50,
     fontWeight: 'bold',
   },
+  headerProfile:{
+    paddingTop: 50,
+    fontSize: 50,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   h2: {
     fontSize: 20,
     paddingVertical: 15,
     color: '#808080',
+  },
+  h2Profile: {
+    fontSize: 20,
+    paddingVertical: 15,
+    color: '#808080',
+    textAlign: 'center',
   },
   cardH1: {
     fontSize: 27,
     paddingBottom: 20,
     fontWeight: 'bold',
     color: 'white',
+  },
+  welcomeConfirm: {
+    fontSize: 27,
+    paddingBottom: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign:'center',
+    alignItems: 'center'
   },
   cardH2: {
     fontSize: 17,
@@ -45,6 +66,10 @@ export default StyleSheet.create({
   },
   logoContainer: {
     paddingVertical: 50,
+  },
+  logoContainerProfile: {
+    paddingVertical: 50,
+    alignItems: 'center'
   },
   card: {
     paddingVertical: 20
@@ -81,6 +106,24 @@ export default StyleSheet.create({
     shadowRadius: 11.95,
     elevation: 18,
   },
+  welcomeButton: {
+    marginTop: 30,
+    marginLeft: 45,
+    height: 155,
+    width: 320,
+    backgroundColor: '#3AA43E',
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    },
+    shadowOpacity: 0.48,
+    shadowRadius: 11.95,
+    elevation: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   homeCard3: {
     height: 155,
     width: 320,
@@ -106,5 +149,30 @@ export default StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 20,
-  }
+  },
+  myRecipes: {
+    flex: 1,
+    marginTop: 0,
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+    color: 'black',
+  },
+  profileModal: {
+    backgroundColor: 'white',
+  },
+  individualIcon: {
+    position: 'absolute',
+    alignItems: 'flex-end',
+    right: 0,
+    paddingRight: 20,
+    paddingTop: 20,
+  },
+  userProfile: {
+    marginHorizontal: "auto",
+    marginTop: 20,
+    maxWidth: 500
+  },
 });
