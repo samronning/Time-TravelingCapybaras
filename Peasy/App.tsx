@@ -11,72 +11,40 @@ import SavedRecipesScreen from './src/screens/SavedRecipesScreen';
 import ExploreRecipesScreen from './src/screens/ExploreRecipesScreen';
 import GroceryListScreen from './src/screens/GroceryListScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeIcon from './src/assets/homeIcon.svg';
+import ListIcon from './src/assets/listIcon.svg';
+import ExploreIcon from './src/assets/exploreIcon.svg';
+import SavedIcon from './src/assets/savedIcon.svg';
+import ProfileIcon from './src/assets/profileIcon.svg';
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
-
-function MyTabBar({ state, descriptors, navigation }) {
-  const focusedOptions = descriptors[state.routes[state.index].key].options;
-
-  if (focusedOptions.tabBarVisible === false) {
-    return null;
-  }
-
-  return (
-    <View style={{ flexDirection: 'row' }}>
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
-        const isFocused = state.index === index;
-
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
-
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
-
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
-
-        return (
-          <TouchableOpacity
-            accessibilityRole="button"
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={{ flex: 1 , height: 80, alignItems: 'center', justifyContent: 'center'}}
-          >
-            <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
-              {label}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  );
-}
 
 export default function App() {
+  
   return (
     <NavigationContainer>
-      <Tab.Navigator tabBar={props => <MyTabBar {...props } />}>
+      <Tab.Navigator screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            if(route.name === 'Home'){
+              return <HomeIcon height={30} width={30}/>;
+            }
+            if(route.name === 'Explore'){
+              return <ExploreIcon height={30} width={30}/>;
+            }
+            if(route.name === 'List'){
+              return <ListIcon height={30} width={30}/>;
+            }
+            if(route.name === 'Saved'){
+              return <SavedIcon height={30} width={30}/>;
+            }
+            if(route.name === 'Profile'){
+              return <ProfileIcon height={30} width={30}/>;
+            }
+          },
+          tabBarLabel: ({ focused, color}) => {
+            return null;
+          }
+        })}>
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Explore" component={ExploreRecipesScreen} />
         <Tab.Screen name="List" component={GroceryListScreen} />
