@@ -7,15 +7,25 @@ import GroceryGraphic from '../assets/shop.svg';
 import styles from '../components/Styles/styles.tsx';
 
 function GroceryItem({mainList, setMainList, index}) {
+
+  const onItemPress = (index) => {
+
+    // Delete element from the listing
+    mainList.splice(index, 1);
+
+    // Update officially so React can track it
+    setMainList([...mainList]);
+  };
+
   return (
     <View style={customStyles.item}>
       <TouchableHighlight
             style={customStyles.itemButton}
             underlayColor={'#3AA43E'}
             onPress={() =>
-          {console.log("okay");}
+          {onItemPress(index)}
         }>
-        <Text style={styles.buttonText}>button</Text>
+        <Text style={styles.buttonText}></Text>
         </TouchableHighlight>
         <TextInput
         style={customStyles.itemField}
