@@ -23,6 +23,13 @@
         "wasm",
         "svg"
       ]
+    },
+    "web": {
+      "build": {
+        "babel": {
+          "include": ["@codler/react-native-keyboard-aware-scroll-view"]
+        }
+      }
     }
   }
 }

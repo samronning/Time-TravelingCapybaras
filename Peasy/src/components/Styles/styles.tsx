@@ -7,7 +7,8 @@ export default StyleSheet.create({
     marginHorizontal: "auto",
     marginTop: 20,
     padding: 70,
-    maxWidth: 500
+    maxWidth: 500,
+    flex: 1
   },
   header:{
     fontSize: 50,
