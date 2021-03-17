@@ -1,12 +1,38 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, SafeAreaView, Button, TouchableOpacity, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, TextInput, View, SafeAreaView, Button, TouchableOpacity, TouchableHighlight, Image, FlatList } from 'react-native';
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createStackNavigator } from '@react-navigation/stack';
 import GroceryGraphic from '../assets/shop.svg';
 import styles from '../components/Styles/styles.tsx';
 
+function GroceryItem({mainList, setMainList, index}) {
+  return (
+    <View style={customStyles.item}>
+      <TouchableHighlight
+            style={customStyles.itemButton}
+            underlayColor={'#3AA43E'}
+            onPress={() =>
+          {console.log("okay");}
+        }>
+        <Text style={styles.buttonText}>button</Text>
+        </TouchableHighlight>
+        <TextInput
+        style={customStyles.itemField}
+        onChangeText={text => {
+            let list = mainList;
+            list[index] = {id: list[index].id, text: text};
+            setMainList(list);
+          }}
+        // value={groceryList[index].text}
+      />
+    </View>
+  )
+}
+
 const GroceryListScreen = ({ navigation }) => {
+
+  const [groceryList, setGroceryList] = useState([]);
 
   // const items = [
   //   { id: '0', text: 'View' },
@@ -16,28 +42,20 @@ const GroceryListScreen = ({ navigation }) => {
   //   { id: '4', text: 'ListView' },
   // ]
 
-  const [groceryList, setGroceryList] = useState([]);
-
   if (groceryList.length) {
     return(
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.header}>Grocery List</Text>
+      <SafeAreaView style={customStyles.container}>
+        <Text style={customStyles.header}>Grocery List</Text>
         <FlatList
       
         data={groceryList}
-        renderItem={({ item, index }) => <TextInput
-        style={customStyles.item}
-        onChangeText={text => {
-            let list = groceryList;
-            list[index] = {id: list[index].id, text: text};
-            setGroceryList(list);
-          }}
-        // value={groceryList[index].text}
-      />}
+        renderItem={({ item, index }) => 
+          <GroceryItem mainList={groceryList} setMainList={setGroceryList} index={index} />
+        }
       keyExtractor={(item) => item.id}
       />
       <TouchableOpacity
-        style={styles.button}
+        style={customStyles.addButton}
         onPress={() =>
           {setGroceryList([...groceryList, { id: String(groceryList.length), text: "" }]);}
         }> 
@@ -62,7 +80,7 @@ const GroceryListScreen = ({ navigation }) => {
         }> 
         <Text style={styles.buttonText}>Add an item</Text>
       </TouchableOpacity>
-      <Text style={styles.h2}>Find recipes and fill your list!</Text>
+      <Text style={customStyles.h2}>Find recipes and fill your list!</Text>
     </View>
   );   
   }
@@ -71,19 +89,62 @@ const GroceryListScreen = ({ navigation }) => {
 const customStyles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
-    justifyContent: "center"
+    marginTop: 100,
+    // padding: 70,
+    // justifyContent: "center"
+  },
+  title: {
+    fontSize: 32,
+  },
+  h2: {
+    fontSize: 20,
+    padding: 20,
+    color: '#808080'
+  },
+  header: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  addButton: {
+    backgroundColor: '#3AA43E',
+    // position: "absolute",
+    alignSelf: 'center',
+    // alignItems: "center",
+    // right: 30,
+    // bottom: 30,
+    // height: 70,
+    // width: 50,
+    padding: 25,
+    borderRadius: 100
   },
   item: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  itemButton: {
+    marginLeft: 16,
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: '#808080',
+    padding: 10,
+    borderRadius: 100,
+    // flex: 1,
+    height: 10,
+    width: 10,
+  },
+  itemField: {
     fontSize: 20,
     padding: 15,
     marginVertical: 8,
     marginHorizontal: 16,
     borderWidth: 1,
-    borderRadius: 10
-  },
-  title: {
-    fontSize: 32,
+    borderColor: '#808080',
+    backgroundColor: "white",
+    borderRadius: 10,
+    flex: 5
   },
 });
 
