@@ -1,61 +1,44 @@
-import React from 'react';
-import { StyleSheet, useWindowDimensions, View, Text, TouchableOpacity, Image, FlatList, ScrollView, Modal, TouchableWithoutFeedback } from 'react-native';
+import React, { Component }from 'react';
+import { StyleSheet, Dimensions, View, Text, TouchableOpacity, Image, Button, FlatList, ScrollView, Modal, TouchableWithoutFeedback } from 'react-native';
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import ExploreGraphic from '../assets/bbq.svg';
 import InexpensiveGraphic from '../assets/inexpensiveGraphic.svg'
 import PopularGraphic from '../assets/popular.svg'
 import HealthyGraphic from '../assets/salad.svg'
 import styles from '../components/Styles/styles';
-import { Data, AnalyzedInstructionsEntity } from './response'
-import { Container, Header, Content, ListItem, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base';
+import { Data } from './response';
 import HTML from "react-native-render-html";
-import { Ionicons } from '@expo/vector-icons';
-
-let modalVisibility = false;
-let currentRecipe = null;
 
 
-const RecipeDetailsScreen = ({ currentRecipe, modalVisibility, onDismiss }) => {
-  return (
-    <View >
-        <Modal
-        animationType="slide"
-        transparent={false}
-        visible={modalVisibility}
-        onRequestClose={() => { onDismiss() }}
-        >
-            <View >
-                <View >
-                    <TouchableOpacity
-                        style={styles.buttonContainer}
-                        onPress={() => { onDismiss() }}>
-                        <Text style={styles.buttonText}>Close</Text> 
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </Modal>
-      </View>
-  );
-};
-const ExploreRecipesScreen = ({ navigation }) => {
-  const _onPress = (item) => { 
-    showModal(item);
-  };
-  const showModal = (item) => {
-    modalVisibility = true;
-    currentRecipe = item;
+export default class ExploreRecipesScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalVisible:false,
+      selectedRecipe: [],
+      data: Data
+    };
   }
-  const hideModal = (item) => {
-    modalVisibility = false;
-    currentRecipe = null;
+
+  clickEventListener = (item) => {
+    this.setState({selectedRecipe: item}, () =>{
+      this.setModalVisible(true);
+    });
   }
-  const contentWidth = useWindowDimensions().width;
-  return (
-    <View>
-    <ScrollView>
-    <View style={{    justifyContent: 'center',
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
+  saveRecipe(recipe) {
+    
+  }
+  render() {
+    return (
+      <View>
+      <ScrollView>
+      <View >
+              <View style={{    justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: "auto",
     marginTop: 20,
@@ -66,57 +49,185 @@ const ExploreRecipesScreen = ({ navigation }) => {
       </View>
       <Text style={styles.h2}>Start exploring and see what's for dinner!</Text>
     </View>
-      <View >
-      <FlatList data={Data} renderItem={({ item }) => (
-        <TouchableOpacity 
-        onPress={_onPress(item)}
-        >
-            <Content style={{padding:10}}>
-            <Card >
-              <CardItem bordered>
-                <Left>
-                  <Body>
-                    <Text style={styles.h2}>{item.title}</Text>
-                  </Body>
-                </Left>
-                <Right flex="row">
-                {item.cheap && <InexpensiveGraphic width={50} height={50}/>}
-                {item.veryHealthy && <HealthyGraphic width={40} height={40} />}
-                {item.veryPopular && <PopularGraphic width={50} height={50} />}
+        <FlatList 
+          data={this.state.data}
+          keyExtractor= {(item) => {
+            return item.id.toString();
+          }}
+          renderItem={({item}) => {
+          return (
+            <TouchableWithoutFeedback style={styles2.card} onPress={() => {this.clickEventListener(item)}}>
+              <View >
+                <View style={styles2.header}>
+                <Text style={styles2.recipeTitle}>{item.title}</Text>
+                <View style={{flex: 1}}>
+                  {item.cheap && <InexpensiveGraphic width={30} height={30}/>}
+                  {item.veryHealthy && <HealthyGraphic width={30} height={30} />}
+                  {item.veryPopular && <PopularGraphic width={30} height={30} />}
+                </View>
+                </View>  
 
-                </Right>
-              </CardItem>
-              <CardItem cardBody >
-                <Image source={{uri: item.image}} style={{height: 200, width: "100%", flex: 1}}/>
-              </CardItem>
-              <CardItem style={{backgroundColor: 'grey'}}>
-              <Left>
-                  <Body>
-                    <Text style={{color:'white'}}>
-                      {item.readyInMinutes} minutes to prepare
+                <Image source={{uri: item.image}} style={{height: 200, width: Dimensions.get('screen').width, flex: 1}}/>
+                <View style={styles2.recipeHighlights}>
+                  <View style={{flex: 1}}>
+                  <Text style={{fontSize:20}} >
+                      {item.readyInMinutes}
                     </Text>
-                  </Body>
-                </Left>
-                <Right>
-                <Body>
-                    <Text style={{color:'white'}}>
-                      ${item.pricePerServing/100} per serving
+                      <Text>minutes to prepare</Text>
+                  </View>
+                    
+                  <View style={{flex: 1}}>
+                  <Text style={{fontSize:20}} >
+                  ${item.pricePerServing/100}
                     </Text>
-                  </Body>
-                </Right>
-              </CardItem>
-            </Card>
-          </Content>
-          </TouchableOpacity>
-        )} keyExtractor={item => item.id.toString()} />
-        </View>
-    </ScrollView>
-    {modalVisibility && <RecipeDetailsScreen 
-        recipe={currentRecipe} 
-        visible={modalVisibility} 
-        onDismiss={hideModal}/>}
-    </View>
-  );
-};
+                      <Text>per serving</Text>
+                  </View>
+              </View>  
+              </View>
+            </TouchableWithoutFeedback>
+          )}}/>
 
-export default ExploreRecipesScreen;
+        <Modal
+          animationType={'fade'}
+          transparent={true}
+          onRequestClose={() => this.setModalVisible(false)}
+          visible={this.state.modalVisible}>
+          <View style={styles2.popupOverlay}>
+            <View style={styles2.popup}>
+              <View style={styles2.popupContent}>
+              <ScrollView contentContainerStyle={styles2.modalInfo}>
+              <View style={styles2.popupButtons}>
+                <TouchableOpacity onPress={() => {this.setModalVisible(false) }} style={styles2.btnClose}>
+                  <Text>Close</Text>
+                </TouchableOpacity>
+              </View>
+                    <Text style={styles2.name}>{this.state.selectedRecipe.title}</Text>
+                    <HTML source={{ html: this.state.selectedRecipe.summary}} contentWidth={100} />
+                    <Text>Ingredients</Text>
+
+                  <Button onPress={this.saveRecipe(this.state.selectedRecipe)} title="Save Recipe" style={styles2.btnClose}/>
+                </ScrollView>
+              </View>
+              
+            </View>
+          </View>
+        </Modal>
+      </View>
+      </ScrollView>
+      </View>
+    );
+  }
+}
+
+const styles2 = StyleSheet.create({
+  recipeHighlights: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+    fontSize: 15,
+
+  },
+  recipeTitle:{
+    flex: 3,
+    fontSize:20,
+    alignSelf:'center',
+    color: '#808080',
+    fontWeight:'bold'
+  },
+  header:{
+    flexDirection: 'row', 
+    flexBasis:40, 
+    justifyContent: 'space-around',
+    padding: 10
+  },
+  headerContent:{
+    padding:30,
+    alignItems: 'center',
+    flex:1,
+  },
+  detailContent:{
+    top:80,
+    height:500,
+    width:Dimensions.get('screen').width - 90,
+    marginHorizontal:30,
+    flexDirection: 'row',
+    position:'absolute',
+    backgroundColor: "#ffffff"
+  },
+  image:{
+    width:90,
+    height:90
+  },
+
+
+
+  card:{
+    shadowColor: '#00000021',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
+
+    marginVertical: 10,
+    marginHorizontal:0,
+    backgroundColor:"white",
+    flexBasis: '46%',
+    flexDirection:'row'
+  },
+
+  name:{
+    fontSize:20,
+    flex:1,
+    alignSelf:'center',
+    color: '#808080',
+    fontWeight:'bold'
+  },
+  position:{
+    fontSize:14,
+    flex:1,
+    alignSelf:'center',
+    color:"#696969"
+  },
+ /************ modals ************/
+  popup: {
+    backgroundColor: 'white',
+    borderRadius: 7,
+  },
+  popupOverlay: {
+    backgroundColor: "#00000057",
+    flex: 1
+  },
+  popupContent: {
+    //alignItems: 'center',
+    margin: 5,
+    height:Dimensions.get('screen').height,
+    marginTop: 50,
+    marginBottom: 50
+  },
+  popupHeader: {
+    marginBottom: 45
+  },
+  popupButtons: {
+    marginTop: 15,
+    flexDirection: 'row',
+    borderTopWidth: 1,
+    borderColor: "#eee",
+    justifyContent:'center'
+  },
+  popupButton: {
+    flex: 1,
+    marginVertical: 16
+  },
+  btnClose:{
+    height:20,
+    backgroundColor:'#20b2aa',
+    padding:20
+  },
+  modalInfo:{
+    alignItems:'center',
+    justifyContent:'center',
+  }
+});
