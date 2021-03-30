@@ -1,4 +1,5 @@
 .DS_Store
+.expo/
 # Logs
 logs
 *.log
