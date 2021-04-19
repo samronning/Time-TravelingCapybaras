@@ -81,7 +81,6 @@ const GroceryListScreen = ({ navigation }) => {
           onTouchStart={drag}
           onChangeText={text => {
             let list = groceryList;
-            console.log(groceryList);
             list[index] = { id: list[index].id, text: text };
             setGroceryList(list);
           }}
