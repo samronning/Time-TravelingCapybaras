@@ -38,11 +38,6 @@ function GroceryItem({ mainList, setMainList, index }) {
   )
 }
 
-type Item = {
-  id: string;
-  text: string;
-};
-
 interface GroceryItem {
   id: string;
   text: string;
