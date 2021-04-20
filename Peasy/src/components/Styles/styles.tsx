@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
   home: {
@@ -14,7 +14,8 @@ export default StyleSheet.create({
     marginHorizontal: "auto",
     marginTop: 20,
     padding: 70,
-    maxWidth: 500
+    maxWidth: 500,
+    flex: 1
   },
   header:{
     fontSize: 50,
@@ -105,6 +106,21 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: 'white',
+    fontSize: 20
+  },
+  inputBox: {
+    height: 50,
+    width: Dimensions.get('screen').width,
+    backgroundColor: 'white',
+    opacity: .5,
     fontSize: 20,
+    padding: 10,
+    flex: 2
+  },
+  searchFilterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+    alignItems: 'center'
   }
 });
