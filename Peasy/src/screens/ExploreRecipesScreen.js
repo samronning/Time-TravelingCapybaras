@@ -11,6 +11,9 @@ import HTML from "react-native-render-html";
 import Collapsible from 'react-native-collapsible';
 
 class  IngredientsDetailsScreen extends Component {
+  exportIngredients(ingredients) {
+    
+  }
   render() {
     // extract ingredient list from API data
     var instructions = this.props.instructions;
@@ -35,6 +38,7 @@ class  IngredientsDetailsScreen extends Component {
                       <Text style={styles2.ingredients}> {item} </Text>
                     </View>
                     )}}/>
+                    <Button onPress={this.exportIngredients(ingredients)} title="Save ingredients to shopping list ->" style={styles2.btnClose}/>
       </View>
   );
  };
