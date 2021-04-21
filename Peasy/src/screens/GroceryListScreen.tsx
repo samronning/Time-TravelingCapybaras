@@ -43,10 +43,46 @@ interface GroceryItem {
   text: string;
 }
 
-const GroceryListScreen = ({ navigation }) => {
+const GroceryListScreen = ({ route, navigation }) => {
 
   const [groceryList, setGroceryList] = useState<GroceryItem[]>([]);
   const [groceryItemIndex, setGroceryIndex] = useState(0);
+
+  // Check if ingredients were passed, if so we automatically add them to the list
+  if (route.params && route.params.ingredients && route.params.ingredients.length) {
+
+    let newIng = [];
+    for (let ingredient of route.params.ingredients) {
+      let found = false;
+
+      for (let item of groceryList) {
+        if (ingredient === item.text) {
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        newIng.push(ingredient);
+      }
+    }
+
+    if (newIng.length) {
+      let list = groceryList;
+      for (let ing of newIng) {
+        list.push({ id: String(Math.floor(Math.random() * 10000)), text: ing });
+        // console.log(groceryItemIndex);
+        // console.log(groceryItemIndex + 1);
+        // setGroceryIndex(groceryItemIndex + 1);
+      }
+
+      setGroceryList([...list]);
+    }
+
+    console.log(groceryList);
+
+    navigation.setParams({ ingredients: undefined });
+  }
 
   // const items = [
   //   { id: '0', text: 'View' },
@@ -84,7 +120,7 @@ const GroceryListScreen = ({ navigation }) => {
             list[index] = { id: list[index].id, text: text };
             setGroceryList(list);
           }}
-        // value={groceryList[index].text}
+          defaultValue={groceryList[index].text}
         />
       </View>
     )

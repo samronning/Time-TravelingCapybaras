@@ -10,9 +10,13 @@ import { Data } from './response';
 import HTML from "react-native-render-html";
 import Collapsible from 'react-native-collapsible';
 
-class  IngredientsDetailsScreen extends Component {
+class IngredientsDetailsScreen extends Component {
+
   exportIngredients(ingredients) {
+
+    // this.props.setModalVisible(false);
     
+    this.props.navigation.navigate("List", { ingredients: ingredients });
   }
   render() {
     // extract ingredient list from API data
@@ -38,7 +42,7 @@ class  IngredientsDetailsScreen extends Component {
                       <Text style={styles2.ingredients}> {item} </Text>
                     </View>
                     )}}/>
-                    <Button onPress={this.exportIngredients(ingredients)} title="Save ingredients to shopping list ->" style={styles2.btnClose}/>
+                    <Button onPress={() => this.exportIngredients(ingredients)} title="Save to Shopping List" style={styles2.btnClose}/>
       </View>
   );
  };
@@ -298,7 +302,7 @@ export default class ExploreRecipesScreen extends Component {
                 collapsed={this.state.ingredientsCollapsed}
                 align="center"
               >
-                <IngredientsDetailsScreen instructions={this.state.selectedRecipe.analyzedInstructions[0].steps} />
+                <IngredientsDetailsScreen instructions={this.state.selectedRecipe.analyzedInstructions[0].steps} navigation={this.props.navigation} setModalVisible={this.setModalVisible} />
               </Collapsible>
               <TouchableOpacity onPress={() => {this.toggleExpanded('instructions')}}>
                 <View>
