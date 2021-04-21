@@ -38,7 +38,7 @@ class  IngredientsDetailsScreen extends Component {
                       <Text style={styles2.ingredients}> {item} </Text>
                     </View>
                     )}}/>
-                    <Button onPress={this.exportIngredients(ingredients)} title="Save ingredients to shopping list ->" style={styles2.btnClose}/>
+                    <Button onPress={this.exportIngredients(ingredients)} title="Save ingredients to shopping list ->" style={styles2.button}/>
       </View>
   );
  };
@@ -106,7 +106,7 @@ export default class ExploreRecipesScreen extends Component {
     }
     
   };
-
+  // source for sort algorithm: https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb
   shuffle() {
     let e = this.state.data;
     for (let i = (e.length - 1); i > 0; i--) {
@@ -185,15 +185,15 @@ export default class ExploreRecipesScreen extends Component {
           <View style={styles.searchFilterContainer}>
             <Text style={styles.h2}>Filter:</Text>
             <TouchableOpacity onPress={() => this.filter('inexpensive')}>
-                <Text style={this.state.inexpensiveFilter ? {color:'#3aa43e'} : {color: '#808080'}}>CHEAP</Text>
+                <Text style={this.state.inexpensiveFilter ? {color:'#3aa43e',  fontSize: 20, fontWeight: '200'} : {color: '#808080',  fontSize: 20, fontWeight: '100'}}>CHEAP</Text>
               {/* <InexpensiveGraphic style={this.state.inexpensiveFilter ? {opacity: 1} : {opacity: .5}} width={50} height={50}/> */}
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.filter('healthy')}>
-              <Text style={this.state.healthyFilter ? {color:'#3aa43e'} : {color: '#808080'}}>HEALTHY</Text>
+              <Text style={this.state.healthyFilter ? {color:'#3aa43e',  fontSize: 20, fontWeight: '200'} : {color: '#808080',  fontSize: 20, fontWeight: '100'}}>HEALTHY</Text>
               {/* <HealthyGraphic style={this.state.healthyFilter ? {opacity: 1} : {opacity: .5}} width={50} height={50} /> */}
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.filter('popular')}>
-              <Text style={this.state.popularFilter ? {color:'#3aa43e'} : {color: '#808080'}}>POPULAR</Text>
+              <Text style={this.state.popularFilter ? {color:'#3aa43e', fontSize: 20, fontWeight: '200'} : {color: '#808080',  fontSize: 20, fontWeight: '100'}}>POPULAR</Text>
               {/* <PopularGraphic style={this.state.popularFilter ? {opacity: 1} : {opacity: .5}} width={50} height={50} /> */}
             </TouchableOpacity>
           </View>
@@ -205,27 +205,27 @@ export default class ExploreRecipesScreen extends Component {
           }}
           renderItem={({item}) => {
           return (
-            <TouchableWithoutFeedback style={styles2.card} onPress={() => {this.clickEventListener(item)}}>
+            <TouchableWithoutFeedback style={styles2.recipeCard} onPress={() => {this.clickEventListener(item)}}>
               <View style={{backgroundColor:'white', marginBottom: 10}}>
                 <View style={styles2.header}>
                 <Text style={styles2.recipeTitle}>{item.title}</Text>
-                <View style={{flex: 1}}>
-                  {item.cheap && <Text style={{color: '#808080'}}>CHEAP</Text>}
-                  {item.veryHealthy && <Text style={{color: '#808080'}}>HEALTHY</Text>}
-                  {item.veryPopular && <Text style={{color: '#808080'}}>POPULAR</Text>}
+                <View style={{alignSelf: 'center'}}>
+                  {item.cheap && <Text style={{color: '#808080', fontWeight: '200'}}>CHEAP</Text>}
+                  {item.veryHealthy && <Text style={{color: '#808080', fontWeight: '200'}}>HEALTHY</Text>}
+                  {item.veryPopular && <Text style={{color: '#808080', fontWeight: '200'}}>POPULAR</Text>}
                 </View>
                 </View>  
 
                 <Image source={{uri: item.image}} style={{height: 200, width: Dimensions.get('screen').width, flex: 1}}/>
                 <View style={styles2.recipeHighlights}>
-                  <View style={{flex: 1}}>
+                  <View >
                   <Text style={{fontSize:20}} >
                       {item.readyInMinutes}
                     </Text>
                       <Text>minutes to prepare</Text>
                   </View>
                     
-                  <View style={{flex: 1}}>
+                  <View >
                   <Text style={{fontSize:20}} >
                   ${(item.pricePerServing/100).toFixed(2)}
                     </Text>
@@ -244,16 +244,14 @@ export default class ExploreRecipesScreen extends Component {
           <View style={styles2.popupOverlay}>
             <View style={styles2.popup}>
               <View style={styles2.popupContent}>
-              <ScrollView contentContainerStyle={styles2.modalInfo}>
-              <View style={styles2.popupButtons}>
+              <ScrollView>
+              <View style={styles2.closeButton}>
                 <TouchableOpacity onPress={() => {this.setModalVisible(false) }} style={{width: "100%"}} >
                   <Text style={{fontWeight: '100', fontSize: 20}}>X</Text>
                 </TouchableOpacity>
-                </View>
+              </View>
                 <View style={styles2.detailsHeader}>
-                <View style={{flex: 2}}>
                   <Text style={styles2.name}>{this.state.selectedRecipe.title}</Text>
-                </View>
                 <View style={{flex: 1}}>
                   <View style={styles2.recipeDetailsHighlights}>
                     <View style={{flex: 1, padding: 5}}>
@@ -271,48 +269,59 @@ export default class ExploreRecipesScreen extends Component {
                   </View>
                 </View>
                 </View> 
-                <Image source={{uri: this.state.selectedRecipe.image}} style={{height: 200, width: Dimensions.get('screen').width, flex: 1}}/>
-                <TouchableOpacity onPress={() => {this.toggleExpanded('description')}}>
-                <View>
-                  <Text style={styles.h2}>
-                    Description
-                  </Text>
+                <View style={{flexDirection: 'row', justifyContent: 'space-around', marginHorizontal: 10, marginBottom: 10 }}>
+                  {this.state.selectedRecipe.cheap && <Text style={{color: '#808080', fontWeight: '200'}}>CHEAP</Text>}
+                  {this.state.selectedRecipe.veryHealthy && <Text style={{color: '#808080', fontWeight: '200'}}>HEALTHY</Text>}
+                  {this.state.selectedRecipe.veryPopular && <Text style={{color: '#808080', fontWeight: '200'}}>POPULAR</Text>}
+                  {this.state.selectedRecipe.vegetarian && <Text style={{color: '#808080', fontWeight: '200'}}>VEGETARIAN</Text>}
+                  {this.state.selectedRecipe.vegan && <Text style={{color: '#808080', fontWeight: '200'}}>VEGAN</Text>}
+                  {this.state.selectedRecipe.glutenFree && <Text style={{color: '#808080', fontWeight: '200'}}>GF</Text>}
+                  {this.state.selectedRecipe.dairyFree && <Text style={{color: '#808080', fontWeight: '200'}}>DAIRY FREE</Text>}
                 </View>
+                <Image source={{uri: this.state.selectedRecipe.image}} style={{height: 200, width: Dimensions.get('screen').width, flex: 1}}/>
+                <View style={{alignItems: 'center'}}>
+                  <TouchableOpacity onPress={() => {this.toggleExpanded('description')}}>
+                  <View>
+                    <Text style={styles.h2}>
+                      Description
+                    </Text>
+                  </View>
+                  </TouchableOpacity>
+                  <Collapsible
+                  collapsed={this.state.descriptionCollapsed}
+                  align="center"
+                  >
+                  <View style={{marginHorizontal: 10}}>
+                  <HTML source={{ html: this.state.selectedRecipe.summary}}/>
+                  </View>
+                </Collapsible>
+                <TouchableOpacity onPress={() => {this.toggleExpanded('ingredients')}}>
+                  <View>
+                    <Text style={styles.h2}>
+                      Ingredients
+                    </Text>
+                  </View>
                 </TouchableOpacity>
                 <Collapsible
-                collapsed={this.state.descriptionCollapsed}
-                align="center"
-                 >
-                <View>
-                <HTML source={{ html: this.state.selectedRecipe.summary}} contentWidth={100} style={{fontSize:20}}/>
-                </View>
-              </Collapsible>
-              <TouchableOpacity onPress={() => {this.toggleExpanded('ingredients')}}>
-                <View>
-                  <Text style={styles.h2}>
-                    Ingredients
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              <Collapsible
-                collapsed={this.state.ingredientsCollapsed}
-                align="center"
-              >
-                <IngredientsDetailsScreen instructions={this.state.selectedRecipe.analyzedInstructions[0].steps} />
-              </Collapsible>
-              <TouchableOpacity onPress={() => {this.toggleExpanded('instructions')}}>
-                <View>
-                  <Text style={styles.h2}>
-                    Instructions
-                  </Text>
-                </View>
-                </TouchableOpacity>
-                <Collapsible collapsed={this.state.instructionsCollapsed} align="center">
+                  collapsed={this.state.ingredientsCollapsed}
+                  align="center"
+                >
+                  <IngredientsDetailsScreen instructions={this.state.selectedRecipe.analyzedInstructions[0].steps} />
+                </Collapsible>
+                <TouchableOpacity onPress={() => {this.toggleExpanded('instructions')}}>
                   <View>
-                    <InstructionsDetailsScreen instructions={this.state.selectedRecipe.analyzedInstructions[0].steps} />
+                    <Text style={styles.h2}>
+                      Instructions
+                    </Text>
                   </View>
-              </Collapsible>
-              <Button onPress={this.saveRecipe(this.state.selectedRecipe)} title="Save Recipe" style={styles2.btnClose}/>
+                  </TouchableOpacity>
+                  <Collapsible collapsed={this.state.instructionsCollapsed} align="center">
+                    <View>
+                      <InstructionsDetailsScreen instructions={this.state.selectedRecipe.analyzedInstructions[0].steps} />
+                    </View>
+                </Collapsible>
+              </View>
+              <Button onPress={this.saveRecipe(this.state.selectedRecipe)} title="Save Recipe" style={styles2.button}/>
                 </ScrollView>
               </View>
               
@@ -335,8 +344,10 @@ const styles2 = StyleSheet.create({
   },
   detailsHeader: {
     flexDirection: 'row',
-    marginTop: 10,
-    marginBottom: 10
+    marginHorizontal: 10,
+    marginVertical: 10,
+    alignItems: 'center',
+    alignContent: 'space-around'
   },
   ingredients: {
     fontSize: 20
@@ -347,68 +358,40 @@ const styles2 = StyleSheet.create({
   },
   recipeHighlights: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
+    justifyContent: 'space-between',
     fontSize: 15,
-
+    marginHorizontal: 10,
+    padding: 10
   },
   recipeTitle:{
     flex: 3,
     fontSize:20,
-    alignSelf:'center',
     color: '#808080',
     fontWeight:'bold'
   },
   header:{
     flexDirection: 'row', 
     flexBasis:40, 
-    justifyContent: 'space-around',
-    padding: 10
-  },
-  headerContent:{
-    padding:30,
-    alignItems: 'center',
-    flex:1,
-  },
-  detailContent:{
-    top:80,
-    height:500,
-    width:Dimensions.get('screen').width - 90,
-    marginHorizontal:30,
-    flexDirection: 'row',
-    position:'absolute',
-    backgroundColor: "#ffffff"
-  },
-  image:{
-    width:90,
-    height:90
+    justifyContent: 'space-between',
+    padding: 10,
+    marginHorizontal: 10,
+    alignItems: 'center'
   },
 
-
-
-  card:{
-    shadowColor: '#00000021',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    elevation: 12,
-
+  recipeCard:{
     marginVertical: 10,
     marginHorizontal:0,
     backgroundColor:"white",
     flexBasis: '46%',
     flexDirection:'row'
   },
-
   name:{
     fontSize:30,
     flex:2,
     color: '#808080',
     alignSelf: 'center',
-    fontWeight:'bold'
+    fontWeight:'bold',
+    marginLeft: 10
   },
   position:{
     fontSize:14,
@@ -421,38 +404,22 @@ const styles2 = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 7,
   },
-  popupOverlay: {
-    backgroundColor: "#00000057",
-    flex: 1
-  },
   popupContent: {
     //alignItems: 'center',
-    margin: 5,
     height:Dimensions.get('screen').height,
+    marginBottom:40
+  },
+  closeButton: {
     marginTop: 50,
-    marginBottom: 50
-  },
-  popupHeader: {
-    marginBottom: 45
-  },
-  popupButtons: {
-    marginTop: 15,
-    flexDirection: 'row',
-    borderTopWidth: 1,
-    borderColor: "#eee",
-    justifyContent:'center'
+    marginLeft: 20
   },
   popupButton: {
     flex: 1,
     marginVertical: 16
   },
-  btnClose:{
+  button:{
     height:20,
     backgroundColor:'#20b2aa',
     padding:20
-  },
-  modalInfo:{
-    alignItems:'center',
-    justifyContent:'center',
   }
 });
