@@ -9,7 +9,9 @@ import HomeScreen from "./src/screens/HomeScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import SavedRecipesScreen from "./src/screens/SavedRecipesScreen";
 import ExploreRecipesScreen from "./src/screens/ExploreRecipesScreen";
-import StatsScreen from "./src/screens/StatsScreen";
+import StatisticsScreen from "./src/screens/StatisticsScreen";
+import BudgetScreen from "./src/screens/BudgetScreen";
+import EditBudgetScreen from "./src/screens/EditBudgetScreen";
 import SettingsScreen from "./src/screens/SettingsScreen";
 import GroceryListScreen from "./src/screens/GroceryListScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -20,14 +22,16 @@ import SavedIcon from "./src/assets/savedIcon.svg";
 import ProfileIcon from "./src/assets/profileIcon.svg";
 
 const Tab = createBottomTabNavigator();
-const ProfileStack = createStackNavigator();
+const Stack = createStackNavigator();
 
 const createProfileScreenStack = () => (
-  <ProfileStack.Navigator>
-    <ProfileStack.Screen name="Profile" component={ProfileScreen} />
-    <ProfileStack.Screen name="Stats" component={StatsScreen} />
-    <ProfileStack.Screen name="Settings" component={SettingsScreen} />
-  </ProfileStack.Navigator>
+  <Stack.Navigator>
+    <Stack.Screen name="Profile" component={ProfileScreen} />
+    <Stack.Screen name="Budget" component={BudgetScreen} />
+    <Stack.Screen name="Statistics" component={StatisticsScreen} />
+    <Stack.Screen name="Settings" component={SettingsScreen} />
+    <Stack.Screen name="Edit Budgets" component={EditBudgetScreen} />
+  </Stack.Navigator>
 );
 
 export default function App() {
