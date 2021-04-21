@@ -9,6 +9,16 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^0.12.61",
+    "@progress/kendo-drawing": "^1.10.0",
+    "@progress/kendo-licensing": "^1.1.4",
+    "@progress/kendo-react-dropdowns": "^4.5.0",
+    "@progress/kendo-react-inputs": "^4.5.0",
+    "@progress/kendo-react-intl": "^4.5.0",
+    "@progress/kendo-react-layout": "^4.5.0",
+    "@progress/kendo-react-listview": "^4.5.0",
+    "@progress/kendo-react-progressbars": "^4.5.0",
+    "@progress/kendo-react-treeview": "^4.5.0",
+    "@react-native-community/checkbox": "^0.5.7",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.8",
     "@react-navigation/native": "^5.9.3",
@@ -19,6 +29,7 @@
     "expo-updates": "~0.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-list-editable": "^0.1.0",
     "react-native": "^0.64.0",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-reanimated": "~1.13.0",
@@ -39,7 +50,14 @@
     "typescript": "~4.0.0"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|react-native-cookies)/)"
+    ]
   },
   "private": true
 }

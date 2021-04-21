@@ -9,6 +9,8 @@ import styles from '../components/Styles/styles.tsx';
 const SavedRecipesScreen = ({ navigation }) => {  
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmationModal, confirmationVisible] = useState(false);
+
+  const [demoModal, demoVisible] = useState(false);
   const [recipeName, onChange] = React.useState(null);
   const [tags, tagChange] = React.useState(null);
   const [ingredients, ingredientChange] = React.useState(null);
@@ -105,6 +107,7 @@ const SavedRecipesScreen = ({ navigation }) => {
                 onPress={() => {
                   confirmationVisible(!confirmationModal)
                   setModalVisible(false)
+                  demoVisible(true)
                 }}
               >
               <Text style={modalstyles.textStyle}>Add to saved recipes</Text>
@@ -121,6 +124,71 @@ const SavedRecipesScreen = ({ navigation }) => {
             </View>
           </View>
         </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={demoModal}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          demoVisible(!demoModal);
+        }}
+      >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={modalstyles.bigModal}>
+        <Text style={modalstyles.headline}>Your Saved Recipes: </Text>
+          <View style={modalstyles.recipeView}>
+            <Text style={modalstyles.modalText}>Name: Chicken Parmesan </Text>
+            <Text style={modalstyles.modalText}>Tags: Chicken, Italian</Text>
+            <Text style={modalstyles.modalText}>Ingredients: 3 chicken breast, 2 eggs, etc.</Text>
+            <TouchableOpacity
+              style={modalstyles.editRemove}
+              onPress={() =>
+              setModalVisible(true)
+            }> 
+              <Text style={styles.cardH1}>Edit/Remove</Text>
+              <View
+                style={[
+                  { justifyContent: "absolute",
+                    top: -40,
+                    left: 255},
+                ]}
+              >
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={modalstyles.viewRecipe}
+              onPress={() =>
+              setModalVisible(true)
+            }> 
+              <Text style={styles.cardH1}>View More Info</Text>
+              <View
+                style={[
+                  { justifyContent: "absolute",
+                    top: -40,
+                    left: 255},
+                ]}
+              >
+              </View>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            style={modalstyles.addRecipe}
+            onPress={() =>
+            setModalVisible(true)
+          }> 
+          <Text style={styles.cardH1}>Add another recipe</Text>
+          <View
+            style={[
+              { justifyContent: "absolute",
+                top: -40,
+                left: 255},
+            ]}
+          >
+          </View>
+        </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
       </Modal>
       <TouchableOpacity
           style={styles.homeCard2}
@@ -142,9 +210,74 @@ const SavedRecipesScreen = ({ navigation }) => {
 }
 
 const modalstyles = StyleSheet.create({
+  viewRecipe: {
+    height: 50,
+    width: 220,
+    padding: 10,
+    marginTop: 30,
+    backgroundColor:  '#3AA43E',
+    borderRadius: 20,
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    },
+    shadowOpacity: 0.48,
+    shadowRadius: 11.95,
+    elevation: 18,
+  },
+  editRemove: {
+    height: 50,
+    width: 180,
+    marginTop: 20,
+    padding: 10,
+    backgroundColor:  '#3AA43E',
+    borderRadius: 20,
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    },
+    shadowOpacity: 0.48,
+    shadowRadius: 11.95,
+    elevation: 18,
+  },
+  headline: {
+    fontSize: 24,
+    marginTop: 50,
+    textAlign: 'center',
+  },
+  recipeView: {
+    margin: 40,
+    width: 350,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  
   addRecipe: {
-    height: 40,
-    width: 200,
+    backgroundColor: "white",
+    alignItems: "center",
+    width: 300,
+    height: 50,
+  },
+  bigModal: {
+    height: 815,
+    width: 414,
+    backgroundColor: "white",
+    alignItems: "center",
+    elevation: 5
+  },
+  addRecipe: {
+    height: 50,
+    width: 260,
     padding: 10,
     backgroundColor: '#3AA43E',
     borderRadius: 20,
