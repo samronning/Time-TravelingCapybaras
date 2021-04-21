@@ -270,13 +270,13 @@ export default class ExploreRecipesScreen extends Component {
                 </View>
                 </View> 
                 <View style={{flexDirection: 'row', justifyContent: 'space-around', marginHorizontal: 10, marginBottom: 10 }}>
-                  {this.state.selectedRecipe.cheap && <Text style={{color: '#808080', fontWeight: '200'}}>CHEAP</Text>}
-                  {this.state.selectedRecipe.veryHealthy && <Text style={{color: '#808080', fontWeight: '200'}}>HEALTHY</Text>}
-                  {this.state.selectedRecipe.veryPopular && <Text style={{color: '#808080', fontWeight: '200'}}>POPULAR</Text>}
-                  {this.state.selectedRecipe.vegetarian && <Text style={{color: '#808080', fontWeight: '200'}}>VEGETARIAN</Text>}
-                  {this.state.selectedRecipe.vegan && <Text style={{color: '#808080', fontWeight: '200'}}>VEGAN</Text>}
-                  {this.state.selectedRecipe.glutenFree && <Text style={{color: '#808080', fontWeight: '200'}}>GF</Text>}
-                  {this.state.selectedRecipe.dairyFree && <Text style={{color: '#808080', fontWeight: '200'}}>DAIRY FREE</Text>}
+                  {this.state.selectedRecipe.cheap && <Text style={styles2.detailsText}>CHEAP</Text>}
+                  {this.state.selectedRecipe.veryHealthy && <Text style={styles2.detailsText}>HEALTHY</Text>}
+                  {this.state.selectedRecipe.veryPopular && <Text style={styles2.detailsText}>POPULAR</Text>}
+                  {this.state.selectedRecipe.vegetarian && <Text style={styles2.detailsText}>VEGETARIAN</Text>}
+                  {this.state.selectedRecipe.vegan && <Text style={styles2.detailsText}>VEGAN</Text>}
+                  {this.state.selectedRecipe.glutenFree && <Text style={styles2.detailsText}>GF</Text>}
+                  {this.state.selectedRecipe.dairyFree && <Text style={styles2.detailsText}>DAIRY FREE</Text>}
                 </View>
                 <Image source={{uri: this.state.selectedRecipe.image}} style={{height: 200, width: Dimensions.get('screen').width, flex: 1}}/>
                 <View style={{alignItems: 'center'}}>
@@ -336,6 +336,10 @@ export default class ExploreRecipesScreen extends Component {
 }
 
 const styles2 = StyleSheet.create({
+  detailsText: {
+    color: '#808080', 
+    fontWeight: '200'
+  },
   recipeDetailsHighlights: {
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -377,7 +381,6 @@ const styles2 = StyleSheet.create({
     marginHorizontal: 10,
     alignItems: 'center'
   },
-
   recipeCard:{
     marginVertical: 10,
     marginHorizontal:0,
@@ -393,12 +396,6 @@ const styles2 = StyleSheet.create({
     fontWeight:'bold',
     marginLeft: 10
   },
-  position:{
-    fontSize:14,
-    flex:1,
-    alignSelf:'center',
-    color:"#696969"
-  },
  /************ modals ************/
   popup: {
     backgroundColor: 'white',
@@ -412,10 +409,6 @@ const styles2 = StyleSheet.create({
   closeButton: {
     marginTop: 50,
     marginLeft: 20
-  },
-  popupButton: {
-    flex: 1,
-    marginVertical: 16
   },
   button:{
     height:20,
